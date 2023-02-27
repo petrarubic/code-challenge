@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.6);
+  background: ${(props) =>
+    props.background ? props.background : `rgba(255, 255, 255, 0.6)`};
   font-family: "Golos Text";
   padding: 10px 20px;
   border-radius: 10px;

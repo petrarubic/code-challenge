@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const FormWrapper = styled.div`
+  position: relative;
   padding: 40px 80px;
   color: #1e2f38;
   display: flex;

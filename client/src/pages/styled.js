@@ -35,4 +35,9 @@ export const ModalWrapper = styled.div`
   -webkit-backdrop-filter: blur(8px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+
+  @media (max-width: 768px) {
+    width: 90%;
+    height: 70%;
+  }
 `;

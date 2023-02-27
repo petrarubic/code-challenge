@@ -1,10 +1,15 @@
 import { InputWrapper } from "./styled";
 
-const Input = ({ type, label, onChange, value }) => {
+const Input = ({ type, label, onChange, value, background, placeholder }) => {
   return (
-    <InputWrapper>
+    <InputWrapper background={background}>
       <label>{label}</label>
-      <input type={type} onChange={onChange} value={value} />
+      <input
+        type={type}
+        onChange={onChange}
+        value={value}
+        placeholder={placeholder}
+      />
     </InputWrapper>
   );
 };
