@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../Input/Input";
 import {
   FormBody,
@@ -10,22 +10,33 @@ import {
 } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/api";
+import { useLoginDataStore } from "../../store/login-data-store";
 
 const LoginForm = ({ heading, subheading }) => {
+  const data = useLoginDataStore((state) => state.data);
+  const [authWarningVisible, setAuthWarningVisible] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    loginUser(email, password);
 
-    if (
-      email === "optimus.prime@autobots.com" &&
-      password === "validPassword1234!"
-    ) {
-      localStorage.setItem("authenticated", true);
-      navigate("/encode");
+    if (email === data.email && password === data.password) {
+      loginUser(email, password)
+        .then((token) => {
+          localStorage.setItem("authToken", token);
+          setAuthWarningVisible(false);
+          navigate("/encode");
+        })
+        .catch((error) => {
+          setAuthWarningVisible(true);
+          setWarningMessage(error);
+        });
+    } else {
+      setAuthWarningVisible(true);
+      setWarningMessage("Account with entered credentials doesn't exist.");
     }
   };
 
@@ -65,6 +76,7 @@ const LoginForm = ({ heading, subheading }) => {
           </div>
         </form>
       </FormBody>
+      {authWarningVisible && <p style={{ color: "white" }}>{warningMessage}</p>}
     </FormWrapper>
   );
 };
