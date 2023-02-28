@@ -26,6 +26,6 @@ export async function encodeText(text) {
       { text },
       { headers: { Authorization: authorization } }
     )
-    .then((res) => res.data.text)
+    .then((res) => res.data)
     .catch((error) => console.log(error.response.data));
 }
